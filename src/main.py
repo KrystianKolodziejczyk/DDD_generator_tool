@@ -6,29 +6,38 @@ infrastructure: list[str] = ["repositories", "services"]
 presentation: list[str] = ["controllers", "dto", "responses"]
 
 
+def make_dir(dirName: str, dirNameSpace: list[str]) -> None:
+    os.system(f"mkdir {dirName}")
+    os.chdir(dirName)
+    for oneDirName in dirNameSpace:
+        os.system(f"mkdir {oneDirName}")
+    os.chdir("..")
+
+
 def create_module(name: str) -> None:
-    os.system(f"mkdir {name} && cd {name}")
+    os.system(f"mkdir {name}")
+    os.chdir(name)
 
     # Creates application directory
-    os.system("mkdir -p application/services")
+    make_dir(dirName="application", dirNameSpace=["services"])
 
     # Creates domain directory
-    os.system("mkdir domain && cd domain")
-    for dirName in domain:
-        os.system(f"mkdir {dirName}")
-    os.system("cd ..")
+    make_dir(dirName="domain", dirNameSpace=domain)
 
     # Creates infrastructure directory
-    os.system("mkdir infrastructure && cd infrastructure")
-    for dirName in infrastructure:
-        os.system(f"mkdir {dirName}")
-    os.system("cd ..")
+    make_dir(dirName="infrastrucutre", dirNameSpace=infrastructure)
 
     # Creates presentation directory
-    os.system("mkdir presentation && cd presentation")
-    for dirName in presentation:
-        os.system(f"mkdir {dirName}")
-    os.system("cd ..")
+    make_dir(dirName="presentation", dirNameSpace=presentation)
 
 
-create_module(name="test")
+# create_module(name="program")
+
+
+def create_all() -> None:
+    os.system("mkdir src && mkdir shared && mkdir core")
+    os.chdir("src")
+    os.system("mkdir modules")
+    os.chdir("modules")
+    create_module(name="example")
+    os.chdir("..")
