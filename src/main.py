@@ -1,6 +1,6 @@
 import typer
 import functions
-from rich.progress import track
+from pathlib import Path
 
 app = typer.Typer()
 
@@ -19,9 +19,12 @@ def create_module() -> None:
 
 
 @app.callback()
-def message(context: typer.Context):
+def message(context: typer.Context) -> None:
     print(f"Executing: {context.invoked_subcommand}\n")
 
 
-if __name__ == "__main__":
-    app()
+# if __name__ == "__main__":
+#     app()
+
+my_dir = Path("src/main.py")
+print(my_dir)
