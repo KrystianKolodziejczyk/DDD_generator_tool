@@ -1,7 +1,5 @@
 import typer
-import funcs
-
-# from pathlib import Path
+import functions
 
 app = typer.Typer()
 
@@ -10,7 +8,7 @@ app = typer.Typer()
 def create_all() -> None:
     main_dir_name: str = typer.prompt("Enter source-code directory name")
     module_dir_name: str = typer.prompt("Enter first module name")
-    funcs.create_all(
+    functions.create_all(
         project_dir_name=main_dir_name,
         module_name=module_dir_name,
     )
@@ -20,7 +18,7 @@ def create_all() -> None:
 def create_module() -> None:
     main_dir_name: str = typer.prompt("Enter source-code directory name")
     module_name: str = typer.prompt("Enter module name")
-    funcs.create_module(module_name=module_name, project_dir_name=main_dir_name)
+    functions.create_module(module_name=module_name, project_dir_name=main_dir_name)
 
 
 @app.callback()

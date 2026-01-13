@@ -1,38 +1,57 @@
+from pathlib import Path
 import resources
-import os
 
 
-# Creates Direcotry
-def make_dir(dir_name: str, dir_name_space: list[str]) -> None:
-    os.system(f"mkdir {dir_name} && touch {dir_name}/__init__.py")
-    os.chdir(dir_name)
-    for oneDirName in dir_name_space:
-        os.system(f"mkdir {oneDirName} && touch {oneDirName}/__init__.py")
-    os.chdir("..")
+def make_dir(path: Path, dir_name_list: list[str]) -> None:
+    for name in dir_name_list:
+        inside_folders: Path = path / name
+        init_file = inside_folders / "__init__.py"
+
+        inside_folders.mkdir()
+        init_file.touch()
 
 
-# Creates Module
-def create_module(name: str) -> None:
-    os.system(f"mkdir {name} && touch {name}/__init__.py")
-    os.chdir(name)
+# Creates module
+def create_module(module_name: str, project_dir_name: str) -> None:
+    project_root = Path.cwd().resolve()
+    projectPath: Path = project_root / project_dir_name
 
-    # Creates application directory
-    make_dir(dir_name="application", dir_name_space=["services"])
+    modulesPath: Path = projectPath / "modules" / module_name
+    init_file: Path = modulesPath / "__init__.py"
 
-    # Creates domain directory
-    make_dir(dir_name="domain", dir_name_space=resources.domain)
+    modulesPath.mkdir(exist_ok=True)
+    init_file.touch(exist_ok=True)
 
-    # Creates infrastructure directory
-    make_dir(dir_name="infrastrucutre", dir_name_space=resources.infrastructure)
+    make_dir(path=modulesPath, dir_name_list=resources.module)
 
-    # Creates presentation directory
-    make_dir(dir_name="presentation", dir_name_space=resources.presentation)
+    dirPath: Path = modulesPath / "application"
+    make_dir(path=dirPath, dir_name_list=["services"])
+
+    dirPath: Path = modulesPath / "domain"
+    make_dir(path=dirPath, dir_name_list=resources.domain)
+
+    dirPath: Path = modulesPath / "infrastructure"
+    make_dir(path=dirPath, dir_name_list=resources.infrastructure)
+
+    dirPath: Path = modulesPath / "presentation"
+    make_dir(path=dirPath, dir_name_list=resources.presentation)
 
 
-# Creates whole DDD project strucutre
-def create_all(src_dir_name: str, module_name: str) -> None:
-    make_dir(dir_name=src_dir_name, dir_name_space=resources.src)
-    os.chdir(f"{src_dir_name}/modules")
+# Creates project
+def create_all(project_dir_name: str, module_name: str) -> Path:
+    project_root = Path.cwd().resolve()
 
-    create_module(name=module_name)
-    os.chdir("..")
+    projectPath: Path = project_root / project_dir_name
+    init_file: Path = projectPath / "__init__.py"
+
+    projectPath.mkdir()
+    init_file.touch()
+
+    for name in resources.src:
+        inside_folders: Path = projectPath / name
+        init_file: Path = inside_folders / "__init__.py"
+
+        inside_folders.mkdir()
+        init_file.touch()
+
+    create_module(module_name=module_name, project_dir_name=project_dir_name)
