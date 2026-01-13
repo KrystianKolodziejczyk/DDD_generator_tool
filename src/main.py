@@ -26,5 +26,15 @@ def message(context: typer.Context) -> None:
 # if __name__ == "__main__":
 #     app()
 
-my_dir = Path("src/main.py")
-print(my_dir)
+my_dir = Path("./test")
+my_file = Path("./spr")
+
+my_dir.mkdir(mode=511)
+my_file.touch(mode=438)
+
+new_file = my_dir / "test_file.txt"
+new_file.mkdir(mode=438)
+
+print(my_dir.parent)
+print(new_file)
+print(new_file.parent)
