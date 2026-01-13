@@ -1,5 +1,5 @@
 from pathlib import Path
-import resources
+from . import resources
 
 
 def make_dir(path: Path, dir_name_list: list[str]) -> None:

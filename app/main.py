@@ -1,10 +1,10 @@
 import typer
-import functions
+from . import functions
 
 app = typer.Typer()
 
 
-@app.command("project-gen")
+@app.command("project")
 def create_all() -> None:
     main_dir_name: str = typer.prompt("Enter source-code directory name")
     module_dir_name: str = typer.prompt("Enter first module name")
@@ -14,7 +14,7 @@ def create_all() -> None:
     )
 
 
-@app.command("add-module")
+@app.command("module")
 def create_module() -> None:
     main_dir_name: str = typer.prompt("Enter source-code directory name")
     module_name: str = typer.prompt("Enter module name")
