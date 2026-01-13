@@ -1,4 +1,5 @@
 src: list[str] = ["modules", "shared", "core"]
+module: list[str] = ["application", "domain", "infrastructure", "presentation"]
 domain: list[str] = ["models", "enums", "repositories", "services"]
 infrastructure: list[str] = ["repositories", "services"]
 presentation: list[str] = ["controllers", "dto", "responses"]
